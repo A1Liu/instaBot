@@ -24,10 +24,10 @@ The Instagram package contains object wrappers to make parsing through Instagram
 The default package for implementing extensions of the FunctionalBot, and also where the running of the final bot should occur.
 
 ## Sources
-[Selenium](https://www.seleniumhq.org/) - This took a long time to get used to using, but once I figured out some of the basics it got a lot easier -- it's a very powerful API once you understand what methods to copy-paste from StackOverflow
-[Tools QA Selenium tutorial](http://toolsqa.com/selenium-tutorial/) - Used this to get a basic grasp of some of the features of Selenium.  
-[XPath Tutorial](https://www.w3schools.com/xml/xpath_intro.asp) - Used this to start to learn XPath.  
-[XPath Generator](https://chrome.google.com/webstore/detail/xpath-generator/dphfifdfpfabhbkghlmnkkdghbmocfeb?hl=en-US) - This made XPath stuff a lot easier to learn. Another alternative is [this] (https://chrome.google.com/webstore/detail/chropath/ljngjbnaijcbncmcnjfhigebomdlkcjo/related?hl=en) (both are Chrome extensions).  
-[JBrowserDriver](https://github.com/MachinePublishers/jBrowserDriver) - I couldn't get this to work, so it's not included in the project, but it's a cool potential direction for the future.
-[Instagram](www.instagram.com) - I couldn't have done this project without the HTML, servers, and existence of Instagram.
+**[Selenium]**(https://www.seleniumhq.org/) - This took a long time to get used to using, but once I figured out some of the basics it got a lot easier -- it's a very powerful API once you understand what methods to copy-paste from StackOverflow
+[**Tools QA Selenium tutorial**](http://toolsqa.com/selenium-tutorial/) - Used this to get a basic grasp of some of the features of Selenium.  
+[**XPath Tutorial**](https://www.w3schools.com/xml/xpath_intro.asp) - Used this to start to learn XPath.  
+[**XPath Generator**](https://chrome.google.com/webstore/detail/xpath-generator/dphfifdfpfabhbkghlmnkkdghbmocfeb?hl=en-US) - This made XPath stuff a lot easier to learn. Another alternative is [this] (https://chrome.google.com/webstore/detail/chropath/ljngjbnaijcbncmcnjfhigebomdlkcjo/related?hl=en) (both are Chrome extensions).  
+[**JBrowserDriver**](https://github.com/MachinePublishers/jBrowserDriver) - I couldn't get this to work, so it's not included in the project, but it's a cool potential direction for the future.
+[**Instagram**](www.instagram.com) - I couldn't have done this project without the HTML, servers, and existence of Instagram.
 
