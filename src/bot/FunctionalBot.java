@@ -6,8 +6,7 @@ import org.openqa.selenium.WebDriver;
  * This class represents the base version of the bot, without any bells and whistles. 
  * It has all the functionality of the bot, but is missing some extra infrastructure that is provided by other classes.
  * 
- * TODO:
- * Finalize the visibility of all methods so that FunctionalBot can be used as a going-off point by any class
+ * TODO: Finalize the visibility of all methods so that FunctionalBot can be used as a going-off point by any class
  * 
  * @author aliu
  *

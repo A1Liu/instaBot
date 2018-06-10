@@ -5,9 +5,9 @@ package bot;
  * @author aliu
  *
  */
-public class Tester {
+class Tester {
 	
-	public static void main(String... args) {
+	public static void main(String args) {
 //Instagram blocks users if they keep doing the same thing over and over again. I've gotten 10-15 different kinds of warnings from Instagram by now, none of them made this process easier.
 		
 		InstaBot bot = new InstaBot();

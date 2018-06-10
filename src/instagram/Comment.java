@@ -22,10 +22,10 @@ class Comment extends InstagramObject {//Make it a concrete object, not abstract
 		super(element);
 	}
 	
-	@Override
-	public boolean checkClass(String cssClass) {
-		return cssClass.equals(CLASS);
-	}
+//	@Override
+//	public boolean checkClass(String cssClass) {
+//		return cssClass.equals(CLASS);
+//	}
 
 	@Override
 	protected void setup() {

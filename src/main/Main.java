@@ -1,35 +1,29 @@
 package main;
 
-import java.io.IOException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 import bot.InstaBot;
 
-/**
- * Main runner class.
- * @author aliu
- *
- */
-public class Main extends runner.Runner {
+public class Main {
 	
-	private InstaBot bot;
+	private static InstaBot bot;
 	
-	public static void main(String... args) throws IOException {
-		launch(args);
-	}
-
-	@Override
-	public void start(String... args) throws Exception {
-		bot = new InstaBot();
-		try {
-			run();
-			Thread.sleep(2000);
-			bot.quit();
-		}catch(Exception e) {e.printStackTrace();bot.quit();}
+	private static String MAIN = "properties/instabot/main/";
+	//private static String SECOND = "properties/instabot/second/";
+	
+	public static void main(String[] args) {
+		WebDriver driver = new HtmlUnitDriver();
+		
+		
 	}
 	
-	public void run() {
+	public static void test1() {
+		bot = new InstaBot(MAIN);
 		bot.login();
 		bot.likeAllRecent();
-		System.out.println(bot.getNoFollowBack());
+		//System.out.println(bot.unfollow());
+		bot.quit();
 	}
+
 }

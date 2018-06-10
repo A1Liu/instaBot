@@ -18,7 +18,6 @@ public class WhiteList implements Constraint {
 
 	@Override
 	public final boolean like(Post post) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

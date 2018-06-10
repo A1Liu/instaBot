@@ -26,7 +26,6 @@ class BotProperties extends java.util.Properties {
 		try {
 			this.loadFile();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

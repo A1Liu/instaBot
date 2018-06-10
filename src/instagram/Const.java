@@ -3,8 +3,7 @@ package instagram;
 /**
  * This class is a utility class that holds useful constants. Note that it only holds general information; all other constants are held by the wrapper objects in {@link instagram.objects}
  * 
- * TODO:
- * Reformat all the constants to be in a somewhat legible organization style
+ * TODO: Reformat all the constants to be in a somewhat legible organization style
  * 
  * @author aliu
  *
@@ -12,7 +11,6 @@ package instagram;
 public class Const {//public final static String
 
 	private Const() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	public static final String INSTAGRAM_LOGIN = "https://www.instagram.com/accounts/login/";

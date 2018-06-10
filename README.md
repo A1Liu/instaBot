@@ -30,4 +30,4 @@ The default package for implementing extensions of the FunctionalBot, and also w
 [**XPath Generator**](https://chrome.google.com/webstore/detail/xpath-generator/dphfifdfpfabhbkghlmnkkdghbmocfeb?hl=en-US) - This made XPath stuff a lot easier to learn. Another alternative is [this](https://chrome.google.com/webstore/detail/chropath/ljngjbnaijcbncmcnjfhigebomdlkcjo/related?hl=en) (both are Chrome extensions).  
 [**JBrowserDriver**](https://github.com/MachinePublishers/jBrowserDriver) - I couldn't get this to work, so it's not included in the project, but it's a cool potential direction for the future.  
 [**Instagram**](www.instagram.com) - I couldn't have done this project without the HTML, servers, and existence of Instagram.
-
+[**HTMLUnit**](http://htmlunit.sourceforge.net/) - I'm going to try to use this to remove the 'visible browser' part of the bot.

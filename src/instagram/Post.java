@@ -1,7 +1,5 @@
 package instagram;
 
-import static instagram.Comments.COMMENT_CSS;
-
 import java.time.Duration;
 import java.time.Instant;
 
@@ -13,28 +11,34 @@ import org.openqa.selenium.WebElement;
 /**
  * Post Object, meant to represent a post on the main page's feed.
  * 
- * TODO:
- * Re-make this entire thing using By.xpath instead of By.className
+ * TODO: Re-make this entire thing using By.xpath instead of By.className -- Xpath is far more flexible and less sensitive to random changes to website format
  * 
  * @author aliu
  *
  */
 public class Post extends InstagramObject {//This needs to also have support for video posts.
 	
-	public static final String ARTICLE_CLASS = "_s5vjd _622au  _5lms4 _8n9ix  ";
-	public static final String DIV_CLASS = "_mesn5";
-	public static final String USERNAME_CLASS = "_2g7d5 notranslate _iadoq";
-	public static final String LOCATION_CLASS = "_6y8ij";
-	public static final String LIKES_CONTAINER_CLASS = "_3gwk6 _nt9ow";
-	public static final String LIKE_BUTTON_CLASS = "_eszkz _l9yih";
-
-	public static final String ARTICLE_CLASS2 = "_s5vjd _622au  _5lms4 _8n9ix  _9445e";
-	public static final String COMMENTS_CLASS = Comments.CLASS;
+	public static final String FEED_POST_XPATH = "//div/article";
+	public static final String PAGE_POST_XPATH = "//div[@role = 'dialog']/article";
+	//public static final String ARTICLE_CLASS = "_s5vjd _622au  _5lms4 _8n9ix  ";
+	//public static final String DIV_CLASS = "_mesn5";
+	//public static final String USERNAME_CLASS = "_2g7d5 notranslate _iadoq";
+	public static  final String USERNAME_XPATH = "./header/div[2]/div[1]";
+	//public static final String LOCATION_CLASS = "_6y8ij";
+	public static final String LOCATION_XPATH = "./header/div[2]/div[2]";
+	//public static final String LIKES_CONTAINER_CLASS = "_3gwk6 _nt9ow";
+	public static final String LIKES_CONTAINER_XPATH = "./div[2]/section[2]//a";
+	//public static final String LIKE_BUTTON_CLASS = "_eszkz _l9yih";
+	public static final String LIKE_BUTTON_XPATH = "./div[2]/section/a[1]";
 	
-	public static final String LIKES_FROM_FEED_CLASS = "_nzn1h";
-	public static final String LIKES_FROM_PROFILE_CLASS = "_nzn1h _gu6vm";
-	public static final String LIST_LIKES_FROM_FEED_CLASS = "_2g7d5 notranslate _de460";
-	public static final String LIST_LIKES_FROM_PROFILE_CLASS = "_2g7d5 notranslate _de460";
+	//public static final String ARTICLE_CLASS2 = "_s5vjd _622au  _5lms4 _8n9ix  _9445e";
+	public static final String FIRST_COMMENT_XPATH = "./div[2]/div[1]/ul/li[1]";
+	//public static final String COMMENTS_CLASS = Comments.CLASS;
+	
+	//public static final String LIKES_FROM_FEED_CLASS = "_nzn1h";
+	//public static final String LIKES_FROM_PROFILE_CLASS = "_nzn1h _gu6vm";
+	//public static final String LIST_LIKES_FROM_FEED_CLASS = "_2g7d5 notranslate _de460";
+	//public static final String LIST_LIKES_FROM_PROFILE_CLASS = "_2g7d5 notranslate _de460";
 	
 	private String user,location,caption;
 	private boolean liked;
@@ -48,36 +52,36 @@ public class Post extends InstagramObject {//This needs to also have support for
 		super(element);
 	}
 	
-	@Override
-	public boolean checkClass(String cssClass) {
-		if (cssClass.equals(ARTICLE_CLASS) || cssClass.equals(ARTICLE_CLASS2)) {
-			feed = true;
-		} else if (cssClass.equals(DIV_CLASS)) {
-			feed = false;
-		} else {
-			return false;
-		} return true;
-	}
+//	@Override
+//	public boolean checkClass(String cssClass) {
+//		if (cssClass.equals(ARTICLE_CLASS) || cssClass.equals(ARTICLE_CLASS2)) {
+//			feed = true;
+//		} else if (cssClass.equals(DIV_CLASS)) {
+//			feed = false;
+//		} else {
+//			return false;
+//		} return true;
+//	}
 
 	@Override
 	protected void setup() {
-		user = this.getElement().findElement(By.className(USERNAME_CLASS)).getText();
+		user = this.getElement().findElement(By.xpath(USERNAME_XPATH)).getText();
 		try {
-			location = this.getElement().findElement(By.className("_60iqg")).getText();
+			location = this.getElement().findElement(By.xpath(LOCATION_XPATH)).getText();
 			if (location.equals("")) location = "[Unknown Location]";
 		} catch (NoSuchElementException | ScriptTimeoutException e) {
 			location = "[unknown location]";
 		}
 		try {
-			WebElement likesContainer = this.getElement().findElement(By.className(LIKES_CONTAINER_CLASS)).findElement(By.cssSelector("a"));
+			WebElement likesContainer = this.getElement().findElement(By.xpath(LIKES_CONTAINER_XPATH));
 		
-			if (likesContainer.getAttribute("class").equals(LIST_LIKES_FROM_PROFILE_CLASS)) {//Eventually need to revisit this, make it more reliable and flexible
+			if (likesContainer.getText().contains(",")) {//Eventually need to revisit this, make it more reliable and flexible
 				likes = likesContainer.getText().split(",|\\sand\\s").length;
 			} else {
 				likes = Integer.parseInt(likesContainer.findElement(By.cssSelector("span")).getText().replaceAll(",", ""));
 			}
 			try {
-				caption = this.getElement().findElement(By.cssSelector(COMMENT_CSS)).findElement(By.xpath("span")).getText();
+				caption = this.getElement().findElement(By.xpath(FIRST_COMMENT_XPATH)).findElement(By.xpath("span")).getText();
 			} catch (NoSuchElementException | ScriptTimeoutException e) {
 				caption = "[no caption]";
 			}
@@ -85,13 +89,13 @@ public class Post extends InstagramObject {//This needs to also have support for
 			likes = 0;
 		}
 		
-		likeButton = this.getElement().findElement(By.className(LIKE_BUTTON_CLASS));
+		likeButton = this.getElement().findElement(By.xpath(LIKE_BUTTON_XPATH));
 		if (likeButton.getText().equals("Unlike"))
 			liked = true;
 		else
 			liked = false;
 		
-		datePosted = Instant.parse(this.getElement().findElement(By.cssSelector("time[class='_p29ma _6g6t5']")).getAttribute("datetime"));
+		datePosted = Instant.parse(this.getElement().findElement(By.cssSelector("time")).getAttribute("datetime"));
 	}
 	
 	

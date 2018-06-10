@@ -3,11 +3,13 @@ package bot;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import instagram.OtherPage;
 import instagram.ProfilePage;
 
 import static instagram.Const.INSTAGRAM;
+import static runner.Debug.*;
 
 /**
  * Handles basic interactions with a profile:
@@ -15,14 +17,13 @@ import static instagram.Const.INSTAGRAM;
  * Going to the profile of a specific user
  * getting information about the bot user
  * 
- * TODO:
- * Getting posts on a profile
- * blocking user
+ * TODO: Getting posts on a profile
+ * TODO: blocking user
  * 
  * @author aliu
  *
  */
-class ProfileBot extends LikerBot {
+abstract class ProfileBot extends LikerBot {
 
 	private String viewing;
 	private int following;
@@ -62,8 +63,13 @@ class ProfileBot extends LikerBot {
 	 * @return the page object of the bot user
 	 */
 	ProfilePage getHomePage() {
-		if (!getWebDriver().getCurrentUrl().equals(INSTAGRAM + getUsername() + "/"))
-			getWebDriver().get(INSTAGRAM + getUsername());
+//		p(getWebDriver().getCurrentUrl());
+		if (!getWebDriver().getCurrentUrl().equals(INSTAGRAM + getUsername() + "/")) {
+			cAll((ProfileBot e) -> {e.getWebDriver().get(INSTAGRAM + getUsername() + "/"); return null;},this);
+//			try {getWebDriver().get(INSTAGRAM + getUsername() + "/");} catch (Exception e) {e.printStackTrace();}
+//			p(getWebDriver().getCurrentUrl());
+		}
+		this.driverWait().until(ExpectedConditions.urlToBe(INSTAGRAM + getUsername()+ "/"));
 		ProfilePage page = new ProfilePage(waitForElement(By.xpath(ProfilePage.XPATH)));
 		viewing = getUsername();
 		followers = page.getFollowerCount();

@@ -22,10 +22,10 @@ class Comments extends InstagramObject {
 		super(element);
 	}
 
-	@Override
-	public boolean checkClass(String cssClass) {
-		return (cssClass.equals(CLASS));
-	}
+//	@Override
+//	public boolean checkClass(String cssClass) {
+//		return (cssClass.equals(CLASS));
+//	}
 
 	@Override
 	protected void setup() {

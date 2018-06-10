@@ -18,6 +18,8 @@ import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import instagram.Post;
+
 /**
  * Handles naively logging into instagram:
  * 
@@ -25,13 +27,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  * checks if login was successful
  * sets basic driver timers
  * 
- * TODO:
- * Improve login checks
+ * TODO: Improve login checks
  * 
  * @author aliu
  *
  */
-class LoginBot {
+abstract class LoginBot {
 
 	private WebDriver webDriver;
 	private long explicitWait;
@@ -39,7 +40,7 @@ class LoginBot {
 	private String username;
 	private String password;
 	
-	public LoginBot(String username, String password) {
+	public LoginBot(String username, String password) {//new ChromeDriver()
 		this(new SafariDriver(),username, password);
 	}
 	
@@ -49,8 +50,8 @@ class LoginBot {
 		this.webDriver.manage().timeouts().pageLoadTimeout(pageWait, TimeUnit.SECONDS);
 		this.webDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		this.webDriver.manage().timeouts().setScriptTimeout(5, TimeUnit.SECONDS);
-		this.webDriver.manage().window().setSize(new Dimension(800,800));
-		this.webDriver.manage().window().setPosition(new Point(900,100));
+		this.webDriver.manage().window().setSize(new Dimension(800,950));
+		this.webDriver.manage().window().setPosition(new Point(900,0));
 		this.explicitWait = 5;
 		this.username = username;
 		this.password = password;
@@ -89,8 +90,9 @@ class LoginBot {
 	 */
 	void waitForLogin() {
 		loggedIn();
+		try {Thread.sleep(2000);} catch (InterruptedException e) {}
 		try {
-			this.waitForElement(1,By.className("_c92w7 _3kb1s")).click();
+			//this.waitForElement(1,By.className("_c92w7 _3kb1s")).click(); TODO: trap for random notification overlays
 		} catch (NoSuchElementException | TimeoutException e) {}
 	}
 	
@@ -101,7 +103,7 @@ class LoginBot {
 	private boolean loggedIn() {
 		try {
 			driverWait(pageWait).until(ExpectedConditions.urlToBe(INSTAGRAM));//Wait to see if redirected to homepage
-			driverWait(pageWait).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//nav[@class='_68u16 _gft4l  ']")));
+			driverWait(pageWait).until(ExpectedConditions.presenceOfElementLocated(By.xpath(Post.FEED_POST_XPATH)));
 			return true;
 		} catch (TimeoutException t) {
 			try {//Check if the username and password information were incorrect

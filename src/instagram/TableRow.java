@@ -24,7 +24,6 @@ public class TableRow extends User {
 	
 	public TableRow(WebElement element) {
 		super(element);
-		// TODO Auto-generated constructor stub
 	}
 	
 	public void view() {
@@ -45,10 +44,10 @@ public class TableRow extends User {
 		}
 	}
 
-	@Override
-	public boolean checkClass(String cssClass) {
-		return cssClass.contains(CLASS);
-	}
+//	@Override
+//	public boolean checkClass(String cssClass) {
+//		return cssClass.contains(CLASS);
+//	}
 
 	@Override
 	protected void setup() {

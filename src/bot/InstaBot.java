@@ -9,6 +9,8 @@ import java.io.ObjectOutputStream;
 import java.util.Set;
 
 import org.openqa.selenium.Cookie;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -23,11 +25,11 @@ import static instagram.Const.INSTAGRAM;
 /**
  * Bot that uses the selenium API to use Instagram's website. Stores cookies in a directory.
  * 
- * TODO:
- * get full support for premade constraints
- * get full support for properties file
- * make the class look prettier
- * Add default scripts, and a 'on start up' property.
+ * TODO: get full support for premade constraints
+ * TODO: get full support for properties file
+ * TODO: make the class look prettier
+ * TODO: Add default scripts, and a 'on start up' property.
+ * TODO: Transition from properties files to preferences API
  * 
  * @author aliu
  *
@@ -43,7 +45,7 @@ public class InstaBot extends VengefulBot {
 		this(DEFAULT_DIRECTORY,constraints);
 	}
 	
-	public InstaBot(String directory, Constraint...constraints) {//Add more intuitive support for using more than one user
+	public InstaBot(String directory, Constraint...constraints) {//TODO: Add more intuitive support for using more than one user
 		super(null, null);
 		properties = new BotProperties(directory + PROPERTIES_FILE);
 		properties.setProperty("directory",directory);
@@ -76,12 +78,12 @@ public class InstaBot extends VengefulBot {
 				if (set == null) {input.close();throw new ClassNotFoundException("File was empty!");}
 				for (Object item : set) {
 					Cookie cookie = (Cookie) item;
-					if (cookie.getDomain().equals("www.instagram.com")) {
+					if (cookie.getDomain().contains("instagram")) {
 						getWebDriver().manage().addCookie(cookie);
 					}
 				}
 				input.close();
-				getWebDriver().get(INSTAGRAM);
+				try {getWebDriver().get(INSTAGRAM);} catch (TimeoutException e) {}
 				waitForLogin();
 				return;
 			} catch (IOException | ClassNotFoundException e) {
@@ -94,6 +96,7 @@ public class InstaBot extends VengefulBot {
 		}
 		properties.remove("cookies");
 		super.login();
+		this.storeCookies();
 	}
 	
 	/**
@@ -105,14 +108,15 @@ public class InstaBot extends VengefulBot {
 		WebElement elem = getFirstPost();
 		boolean running = true;
 		while (running) {
+			JavascriptExecutor je = (JavascriptExecutor) getWebDriver();
+			je.executeScript("arguments[0].scrollIntoView(true);",elem);
 			Post post = new Post(elem);
 			if (post.isLiked()) running = false;
 			else if (shouldLike(post) && canLike(post)) {
 				post.like();//In the implementation described by the constraint interface, if shouldLike is true canLike must also be true.
 				System.out.println(post.toString());
-			} else post.view();
+			}
 			elem = getNextLoop(elem);
-			sleep();
 		}
 	}
 	
@@ -141,7 +145,6 @@ public class InstaBot extends VengefulBot {
 			output.writeObject(cookies);
 			output.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

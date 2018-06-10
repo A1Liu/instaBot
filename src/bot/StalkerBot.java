@@ -20,20 +20,38 @@ import instagram.TableRow;
  * Checking their followers and followings
  * etc. etc.
  * 
- * TODO:
- * 
- * Liking all the posts on a profile
- * unliking all the posts on a profile
- * liking all recent posts on a profile
+ * TODO: Liking all the posts on a profile
+ * TODO: unliking all the posts on a profile
+ * TODO: liking all recent posts on a profile
  * 
  * @author aliu
  *
  */
-class StalkerBot extends ProfileBot {
+abstract class StalkerBot extends ProfileBot {
 
 	public StalkerBot(WebDriver webDriver, String username, String password) {super(webDriver, username, password);}
 	
 	public StalkerBot(String username, String password) {super(username, password);}
+	
+	/**
+	 * Gets list of following for specified user
+	 * @param username username of user
+	 * @return list of following for user
+	 */
+	public Collection<String> getFollowing(String username) {
+		this.getPage(username);
+		return this.getFollowing();
+	}
+	
+	/**
+	 * Gets list of followers of specified user
+	 * @param username username of user
+	 * @return list of followers of user
+	 */
+	public Collection<String> getFollowers(String username) {
+		this.getPage(username);
+		return this.getFollowers();
+	}
 	
 	/**
 	 * Gets a list of people that a specific profile is following

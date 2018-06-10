@@ -1,6 +1,7 @@
 package bot;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -15,13 +16,13 @@ import static bot.Util.getNextLoop;
  * likes posts
  * optionally checks posts for information
  * 
- * TODO:
- * Improve runtime, make more robust in cases of instagram being weirdw
+ * TODO: Improve runtime, make more robust in cases of instagram being weirdw
+ * TODO: Change view methods to scroll
  * 
  * @author aliu
  *
  */
-class LikerBot extends LoginBot {
+abstract class LikerBot extends LoginBot {
 	
 	private int sleepTime;
 	private boolean scrolled;
@@ -50,14 +51,16 @@ class LikerBot extends LoginBot {
 		WebElement elem = getFirstPost();
 		boolean running = true;
 		while (running) {
+			JavascriptExecutor je = (JavascriptExecutor) getWebDriver();
+			je.executeScript("arguments[0].scrollIntoView(true);",elem);
 			Post post = new Post(elem);
 			if (post.isLiked()) running = false;
 			else if (shouldLike(post) && canLike(post)) {
 				post.like();//In the implementation described by the constraint interface, if shouldLike is true canLike must also be true.
 				System.out.println(post.toString());
-			} else post.view();
+			}
 			elem = getNextLoop(elem);
-			sleep();
+//			sleep();
 		}
 	}
 	
@@ -71,15 +74,16 @@ class LikerBot extends LoginBot {
 		WebElement elem = getFirstPost();
 		int count = 0;
 		while (count < limit) {
+			JavascriptExecutor je = (JavascriptExecutor) getWebDriver();
+			je.executeScript("arguments[0].scrollIntoView(true);",elem);
 			Post post = new Post(elem);
-			post.view();
 			if (canLike(post)) {
 				post.like();
 				System.out.println(post.toString());
 			}
 			count++;
 			if (count < limit) elem = getNextLoop(elem);
-			sleep();
+//			sleep();
 		}
 	}
 	
@@ -93,15 +97,16 @@ class LikerBot extends LoginBot {
 		WebElement elem = getFirstPost();
 		int count = 0;
 		while (count < limit) {
+			JavascriptExecutor je = (JavascriptExecutor) getWebDriver();
+			je.executeScript("arguments[0].scrollIntoView(true);",elem);
 			Post post = new Post(elem);
-			post.view();
 			if (canUnlike(post)) {
 				post.unLike();
 				System.out.println(post.toString());
 			}
 			count++;
 			if (count < limit) elem = getNextLoop(elem);
-			sleep();
+//			sleep();
 		}
 	}
 	
@@ -114,7 +119,7 @@ class LikerBot extends LoginBot {
 		if (!getWebDriver().getCurrentUrl().equals(INSTAGRAM) || scrolled)
 			getWebDriver().get(INSTAGRAM);
 		scrolled = true;
-		return waitForElement(By.className(Post.ARTICLE_CLASS));
+		return waitForElement(By.xpath(Post.FEED_POST_XPATH));
 	}
 	
 	/**
@@ -124,7 +129,7 @@ class LikerBot extends LoginBot {
 	public WebElement gotoFeed() {
 		getWebDriver().get(INSTAGRAM);
 		scrolled = false;
-		return waitForElement(By.className(Post.ARTICLE_CLASS));
+		return waitForElement(By.xpath(Post.FEED_POST_XPATH));
 	}
 	
 	void setScrolled(boolean scrolled) {

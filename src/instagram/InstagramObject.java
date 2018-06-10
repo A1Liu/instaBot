@@ -10,19 +10,19 @@ abstract class InstagramObject {
 	private WebElement element;
 	
 	public InstagramObject(WebElement element) {
-		if (!this.checkClass(element.getAttribute("class"))) {
-			throw new IllegalArgumentException("Class attribute of element doesn't match the defined CSS Class for this object.");
-		}
+//		if (false) {
+//			throw new IllegalArgumentException("Class attribute of element doesn't match the defined CSS Class for this object.");
+//		}
 		this.setElement(element);
 		this.setup();
 	}
 	
-	/**
-	 * Checks a string that represents a WebElement's CSS class attribute. Should return true if the element's class matches that of any element that this object can parse.
-	 * @param cssClass the class of the object being checked
-	 * @return true if the class matches that of an element type that can be parsed by this object
-	 */
-	public abstract boolean checkClass(String cssClass);
+//	/**
+//	 * Checks a string that represents a WebElement's CSS class attribute. Should return true if the element's class matches that of any element that this object can parse.
+//	 * @param cssClass the class of the object being checked
+//	 * @return true if the class matches that of an element type that can be parsed by this object
+//	 */
+//	public abstract boolean checkClass(String cssClass);
 	
 	/**
 	 * Parses the WebElement held in this object after instantiation and instantiates all fields of this object.
@@ -35,10 +35,10 @@ abstract class InstagramObject {
 	 */
 	public boolean equals(Object o) {
 		if (o instanceof InstagramObject) {
-			if (((InstagramObject) o).checkClass(element.getAttribute("class")) ) {
+			//if (((InstagramObject) o).checkClass(element.getAttribute("class")) ) {
 				if (((InstagramObject) o).getElement().equals(element))
 					return true;
-			}
+		//	}
 		} return false;
 	}
 	

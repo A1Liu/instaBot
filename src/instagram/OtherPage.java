@@ -13,7 +13,6 @@ public class OtherPage extends ProfilePage {
 	
 	public OtherPage(WebElement element) {
 		super(element);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

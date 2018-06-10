@@ -6,9 +6,8 @@ import org.openqa.selenium.WebElement;
 /**
  * Profile Object, meant to represent all the data that can be gotten from viewing a profile, public or private.
  * 
- * TODO:
- * Getting posts
- * blocking profiles
+ * TODO: Getting posts
+ * TODO: blocking profiles
  * 
  * @author aliu
  *
@@ -43,10 +42,10 @@ public class ProfilePage extends User {//Concrete class
 	
 	public ProfilePage(WebElement element) {super(element);}
 
-	@Override
-	public boolean checkClass(String cssClass) {
-		return cssClass.equals(CLASS);
-	}
+//	@Override
+//	public boolean checkClass(String cssClass) {
+//		return cssClass.equals(CLASS);
+//	}
 
 	@Override
 	void setup() {
@@ -146,13 +145,12 @@ public class ProfilePage extends User {//Concrete class
 
 	@Override
 	void follow() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	void unFollow() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
