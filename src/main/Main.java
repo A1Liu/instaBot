@@ -5,15 +5,16 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 import bot.InstaBot;
 
-public class Main {
+public class Main {//TODO: Use debug class to analyze runtime
 	
 	private static InstaBot bot;
 	
-	private static String MAIN = "properties/instabot/main/";
+	private static String MAIN = "properties/main/";
 	//private static String SECOND = "properties/instabot/second/";
 	
 	public static void main(String[] args) {
-		WebDriver driver = new HtmlUnitDriver();
+		//WebDriver driver = new HtmlUnitDriver();
+		test1();
 		
 		
 	}
